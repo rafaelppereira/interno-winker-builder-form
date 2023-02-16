@@ -15,7 +15,7 @@ import { useGenerate } from "./hooks/useGenerate";
 
 function App() {
   const [openModal, setOpenModal] = useState(false);
-  const { openJSONText, jsonText } = useGenerate();
+  const { openJSONText, jsonTextBackup } = useGenerate();
 
   function handleToggleModel() {
     setOpenModal(!openModal);
@@ -49,7 +49,7 @@ function App() {
         <div className="flex items-center gap-4 mt-8">
           <LinkButton
             name="Repositório no Github"
-            url="https://github.com/rafaelppereira"
+            url="https://github.com/rafaelppereira/winker-builder-form"
             tooltip="Clique aqui para ir ao repositório do projeto"
             icon={<GithubLogo size={20} />}
           />
@@ -93,11 +93,12 @@ function App() {
                 background="#eeeeee"
                 data-cy="root-container"
               >
-                <Element
-                  canvas
-                  is={Container}
-                  data-cy="root-container"
-                ></Element>
+                <Element canvas is={Container} data-cy="root-container">
+                  <InputSmall
+                    label="Texto da label"
+                    placeholder="Digite seu texto"
+                  />
+                </Element>
               </Element>
             </Frame>
           </div>
@@ -121,7 +122,7 @@ function App() {
       {openJSONText && (
         <section className="mt-10 w-full max-w-5xl">
           <div className="w-full relative p-5 rounded-lg bg-white">
-            <CopyToClipboard text={jsonText}>
+            <CopyToClipboard text={jsonTextBackup}>
               <button
                 className="absolute right-2 top-2 text-white bg-orange-500 w-8 h-8 rounded-md flex items-center justify-center hover:brightness-90 transition-all"
                 type="button"
@@ -133,52 +134,7 @@ function App() {
             </CopyToClipboard>
 
             <p className="text-gray-500 text-sm font-light select-none">
-              {JSON.stringify({
-                ROOT: {
-                  type: { resolvedName: "Container" },
-                  isCanvas: true,
-                  props: {
-                    background: "#eeeeee",
-                    padding: 20,
-                    "data-cy": "root-container",
-                  },
-                  displayName: "Container",
-                  custom: {},
-                  hidden: false,
-                  nodes: ["9gNNdEyz1H"],
-                  linkedNodes: {},
-                },
-                zajCqK0O_E: {
-                  type: { resolvedName: "Container" },
-                  isCanvas: true,
-                  props: {
-                    background: "#ffffff",
-                    padding: 40,
-                    "data-cy": "root-container",
-                  },
-                  displayName: "Container",
-                  custom: {},
-                  parent: "ROOT",
-                  hidden: false,
-                  nodes: [],
-                  linkedNodes: {},
-                },
-                "9gNNdEyz1H": {
-                  type: { resolvedName: "Container" },
-                  isCanvas: true,
-                  props: {
-                    background: "#ffffff",
-                    padding: 40,
-                    "data-cy": "root-container",
-                  },
-                  displayName: "Container",
-                  custom: {},
-                  parent: "ROOT",
-                  hidden: false,
-                  nodes: [],
-                  linkedNodes: {},
-                },
-              })}
+              {jsonTextBackup}
             </p>
           </div>
         </section>

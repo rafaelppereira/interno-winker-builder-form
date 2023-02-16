@@ -1,6 +1,5 @@
 import { useEditor } from "@craftjs/core";
 import { ReactElement } from "react";
-import { Button } from "./user/Button";
 
 interface GrabButtonProps {
   name: string;

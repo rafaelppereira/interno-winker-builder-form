@@ -2,15 +2,20 @@ import { useEditor } from "@craftjs/core";
 import { Code } from "phosphor-react";
 import { useGenerate } from "../hooks/useGenerate";
 
+import lz from "lzutf8";
+
 export function GenerateJSONButton() {
-  const { setJsonText, setOpenJSONText } = useGenerate();
+  const { setJsonText, setOpenJSONText, setJsonTextBackup } = useGenerate();
 
   const { query } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
 
   function handleGenerateJSONForm() {
-    setJsonText(JSON.stringify(query.serialize()));
+    const json = lz.encodeBase64(lz.compress(query.serialize()));
+
+    setJsonText(json);
+    setJsonTextBackup(lz.decompress(lz.decodeBase64(json)));
     setOpenJSONText(true);
   }
 
