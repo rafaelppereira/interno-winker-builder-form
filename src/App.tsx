@@ -1,5 +1,5 @@
 import { Editor, Element, Frame } from "@craftjs/core";
-import { Copy, Gear, GithubLogo, TextIndent } from "phosphor-react";
+import { Copy, Gear, GithubLogo, Table, TextIndent } from "phosphor-react";
 
 import { GrabButton } from "./components/GrabButton";
 import { LinkButton } from "./components/LinkButton";
@@ -12,13 +12,19 @@ import { GenerateJSONButton } from "./components/GenerateJSONButton";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { toast } from "react-hot-toast";
 import { useGenerate } from "./hooks/useGenerate";
+import { Modal } from "./components/Modal";
 
 function App() {
   const [openModal, setOpenModal] = useState(false);
+  const [openModalPreview, setOpenModalPreview] = useState(false);
   const { openJSONText, jsonTextBackup } = useGenerate();
 
   function handleToggleModel() {
     setOpenModal(!openModal);
+  }
+
+  function handleToggleModalPreview() {
+    setOpenModalPreview(!openModalPreview);
   }
 
   function handleCopyJSONText() {
@@ -115,8 +121,19 @@ function App() {
             <Gear size={18} />
             Configurar propriedades
           </button>
+
+          <button
+            title="Clique para abrir o modal de edição de propriedades"
+            type="button"
+            className="bg-gray-700 px-4 py-2 flex items-center gap-2 rounded-full text-sm font-light hover:brightness-90 transition-all"
+            onClick={handleToggleModalPreview}
+          >
+            <Table size={18} />
+            Criar form a partir de um JSON
+          </button>
         </div>
         {openModal && <SidebarSettings onToggleModal={handleToggleModel} />}
+        {openModalPreview && <Modal onToggleModal={handleToggleModalPreview} />}
       </Editor>
 
       {openJSONText && (
@@ -132,7 +149,6 @@ function App() {
                 <Copy size={20} />
               </button>
             </CopyToClipboard>
-
             <p className="text-gray-500 text-sm font-light select-none">
               {jsonTextBackup}
             </p>
